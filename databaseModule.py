@@ -11,20 +11,46 @@ class DB_connect(object):
             print(err)   
 
     def executeDB(self,statement):
-        self.cursor.execute(statement)
-    
+        try:
+            self.cursor.execute(statement)
+        except Error as err:
+            print(err)
+            
+        
     def createTable(self):
         statement = '''
         CREATE TABLE IF NOT EXISTS PEOPLE
         (ID INT PRIMARY KEY NOT NULL,
-        NAME TEXT NOT NULL
-        )
+        NAME TEXT NOT NULL,
+        EMAIL TEXT NOT NULL,
+        BIO TEXT,
+        GENDER TEXT,
+        LINK TEXT,
+        ADDRESS TEXT,
+        LONGITUDE REAL,
+        LATITUDE REAL,
+        IMAGE BLOB,
+        PHONE INT,
+        DOB TEXT
+        );
         '''
-        self.cursor.execute(statement)
         
+        try:
+            self.cursor.execute(statement)
+            self.Link.commit()
+        except Error as err:
+            print(err)
+      
+        
+
     def closeDB(self):
-        self.Link.commit()
-        self.Link.close()        
+        try:
+            self.Link.commit()
+            self.Link.close()
+            print('Database Closed Successfully')
+        except Error as err:
+            print(err)
+                
 
 if __name__== '__main__':
 
