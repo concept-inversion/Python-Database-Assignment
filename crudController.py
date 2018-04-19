@@ -11,8 +11,7 @@ class CRUD():
         columns = ', '.join(each.keys())
         placeholders = ':'+', :'.join(each.keys())
         statement = 'INSERT INTO PEOPLE (%s) VALUES (%s)'% (columns, placeholders,)
-        data=self.db.Link.execute(statement,each)
-        data= self.db.executeDB(statement)   
+        data=self.db.Link.execute(statement,each)   
         return data
 
     def Update(self,param):
