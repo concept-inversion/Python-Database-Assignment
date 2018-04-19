@@ -40,7 +40,7 @@ class DB_connect(object):
         );
 '''        
         try:
-            data= self.cursor.execute(statement)
+            self.cursor.execute(statement)
             self.Link.commit()
             print("table creataed")
         except Error as err:

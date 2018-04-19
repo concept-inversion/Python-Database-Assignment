@@ -3,11 +3,10 @@ import json
 #generate query from user input
 class CRUD():
     def __init__(self, *args, **kwargs):
-        # use static methods
+        # use static methods in future
         self.db = DB_connect('mysql.db') 
     
     def Create(self,each):
-        
         columns = ', '.join(each.keys())
         placeholders = ':'+', :'.join(each.keys())
         statement = 'INSERT INTO PEOPLE (%s) VALUES (%s)'% (columns, placeholders,)
@@ -15,7 +14,6 @@ class CRUD():
         return data
 
     def Update(self,param):
-
         statement= 'UPDATE PEOPLE SET %s'% (param)
         print(statement)
         data=self.db.executeDB(statement)
