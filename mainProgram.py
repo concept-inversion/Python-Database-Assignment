@@ -2,25 +2,59 @@ import json
 from databaseModule import DB_connect
 from crudController import CRUD
 
-'''
+
 class Program():
-    def Delete():
+    def __init__(self, *args, **kwargs):
+        self.crud = CRUD()
 
-    def Insert():
-    
-    def Update():
-    
-    def Select():
-    
-    def upload_json():
-'''
+    def Delete(self):
+        # [Column name] [operation][cond]
+        cond = input("Enter the query starting from column name: ")
+        self.crud.Delete(cond)
 
-#if __name__== '__main__'    
-new= CRUD()
-#new.JsonLoader('raw_data.json')
-data1=new.Update("Email = 'kale' WHERE Image= 'hans.io'")
-data = new.Read("Email= 'kale'")
+    def Insert(self):
+        format = {
+        "Bio": "",
+        "Name": "",
+        "Dob": "",
+        "Gender": "",
+        "Image": "",
+        "Longitude": "",
+        "Phone": "",
+        "Link": "",
+        "Address": "",
+        "Latitude": "",
+        "Email": ""
+        }
+        for key in format:
+            format[key]= input("Enter the  "+key )
+        self.crud.Create(format)
 
-for each in data:
-    print(each)
+    def Update(self,args):
+        # [Column name] [operation][cond]
+        cond = input("Enter the query starting from column name: ")
+        self.crud.Read(cond)
+
+    def Select(self):
+        # [Column name] [operation][cond]
+        cond = input("Enter the query starting from column name: ")
+        output = self.crud.Read(cond)
+        #print("output from database : " + output)
+        return output
+    
+    def upload_json(self,data):
+        self.crud.JsonLoader(data)
+        
+
+if __name__== '__main__':
+    new = Program()
+#new.Insert()
+    data=new.Select()
+    for each in data:
+        print (each)
+    '''
+    new.upload_json('raw_data.json')
+    data1=new.Update("Email = 'kale' WHERE Image= 'hans.io'")
+    data = new.Select("Email= 'kale'")
+    '''
 
