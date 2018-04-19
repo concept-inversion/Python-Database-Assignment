@@ -17,12 +17,17 @@ class CRUD():
         statement= 'UPDATE PEOPLE SET %s'% (param)
         print(statement)
         data=self.db.executeDB(statement)
-        return data
+        return data 
 
     def Read(self, param):
         statement= ' SELECT * FROM PEOPLE WHERE (%s)'% (param)
         data=self.db.executeDB(statement)
-        return data
+        return data.fetchall()
+    
+    def View(self):
+        statement= ' SELECT * FROM PEOPLE ' 
+        data=self.db.executeDB(statement)
+        return data.fetchall()
 
     def Delete(self, param):
         statement= 'DELETE FROM PEOPLE WHERE (%s)'%(param)
@@ -37,6 +42,8 @@ class CRUD():
             statement = 'INSERT INTO PEOPLE (%s) VALUES (%s)'% (columns, placeholders,)
             data=self.db.Link.execute(statement,each)
         return data
-
+    
+    def close(self):
+        self.db.closeDB()
 
 
