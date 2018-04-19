@@ -1,6 +1,7 @@
 import json
 from databaseModule import DB_connect
 from crudController import CRUD
+from SortnSearch import sortSearch
 import dis
 import os
 
@@ -29,37 +30,45 @@ class Program():
         "Email": ""
         }
         for key in format:
-            format[key]= input("Enter the  "+key )
+            format[key]= input("Enter the "+ key )
         self.crud.Create(format)
 
     def Update(self):
         # [Column name] [operation][cond]
         cond = input("[Update]Enter the query starting from column name: ")
         self.crud.Read(cond)
+    
+    def View(self):
+        output=self.crud.View()
+        if output:
+            for each in output:
+                print(each)
 
     def Select(self):
         # [Column name] [operation][cond]
         cond = input("[Select]Enter the query starting from column name: ")
-        print("read called")
         output = self.crud.Read(cond)
-        print("data retrieved")
-        print(output.fetchall())
         if output:
             for each in output:
                 print (each)
-
         else:
             print("no data")
-        return output
+        
     
     def upload_json(self):
         data = input("Enter json file: ")
         self.crud.JsonLoader(data)
+    
+    def sort(self):
+        sor = sortSearch()
+        sor.Sort()
+    def close(self):
+        self.crud.close()
         
 
 if __name__== '__main__':
     new = Program()
-    options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json]
+    options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.View,new.sort]
     while True:
         action = int(input(
             '''
@@ -68,10 +77,14 @@ if __name__== '__main__':
             Press 3 to Update
             Press 4 to Delete
             Press 5 to Load JSON
+            Press 6 to View all rows
+            Press 7 to Sort by name
             Press 0 to exit
+            
             '''
         ))
         if(action==0):
+            new.close()
             break
         else:
             options[action]()
