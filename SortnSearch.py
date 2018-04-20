@@ -13,11 +13,21 @@ class sortSearch():
 
     def Sort(self,*args):
         data = self.crud.View()
-        print("suce")
-        #data = [x[1] for x in data]
-        out = self.InsertionSort(data)
-        #out = self.ThreeP_QuickSort(data)
-        return out
+        key = (input('''
+                        Press and Enter 1 for Insertion sort
+                        Press and Enter 2 for Quick Sort
+                        Press and Enter any other keys to exit
+                        '''))
+        
+        if key == '1':
+            out = self.InsertionSort(data)
+            return out
+        elif key == '2':
+            out = self.ThreeP_QuickSort(data)
+            return out
+        else: 
+            exit
+        
 
     def InsertionSort(self,data):
         length = len(data)
@@ -28,11 +38,10 @@ class sortSearch():
                 data[holePos] = data[holePos-1]
                 holePos= holePos-1        
             data[holePos]=Value
+        
         return data
 
     def ThreeP_QuickSort(self,data):
-        
-        
         def pivotFind(start,end):
             if (end-start) > 3:
                 rand = random.sample(range(start,end),3)
@@ -40,13 +49,13 @@ class sortSearch():
                 rand = random.sample(range(start,end),1)
             x= [data[a] for a in rand]
             median = statistics.median(x)
-            pivot = data.index(median)
+            pivot =next((i for i,t in enumerate(data) if t[1]==median),-1)
             return pivot
         
         def partitionFunc(left,right,pivot):
             newPivotIndex = left -1    
             for index in range(left,right):
-                if data[index]<data[right]:#check if current val is less than pivot value
+                if data[index][1]<data[right][1]:#check if current val is less than pivot value
                     newPivotIndex=newPivotIndex+1
                     data[newPivotIndex], data[index] = data[index],data[newPivotIndex]
                     
