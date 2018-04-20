@@ -2,10 +2,7 @@ import json
 from databaseModule import DB_connect
 from crudController import CRUD
 from SortnSearch import sortSearch
-import dis
-import os
-
-
+from texttable import Texttable
 class Program():
     def __init__(self, *args, **kwargs):
         self.crud = CRUD()
@@ -40,9 +37,28 @@ class Program():
     
     def View(self):
         output=self.crud.View()
+        Ttable = Texttable(150)
+        Header = ["Id",    
+        "Bio",
+        "Name",
+        "Dob",
+        "Gender",
+        "Image",
+        "Longitude",
+        "Phone",
+        "Link",
+        "Address",
+        "Latitude",
+        "Email"
+        ]
+        
         if output:
-            for each in output:
-                print(each)
+            Ttable.add_rows(output)
+            Ttable.set_deco(Texttable.BORDER | Texttable.HEADER | Texttable.VLINES | Texttable.HLINES )
+            Ttable.header(Header)
+            print(Ttable.draw())
+        else:
+            print("No Data to show")
 
     def Select(self):
         # [Column name] [operation][cond]
@@ -61,7 +77,10 @@ class Program():
     
     def sort(self):
         sor = sortSearch()
-        sor.Sort()
+        out= sor.Sort()
+        for each in out:
+            print(each)
+
     def close(self):
         self.crud.close()
         
