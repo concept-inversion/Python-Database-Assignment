@@ -58,7 +58,11 @@ class Program():
         ]
         
         if data:
-            Ttable.add_rows(data)
+            if len(data)>1:
+                Ttable.add_rows(data)
+            else:
+                
+                Ttable.add_row(data[0])
             Ttable.set_deco(Texttable.BORDER | Texttable.HEADER | Texttable.VLINES | Texttable.HLINES )
             Ttable.header(Header)
             print(Ttable.draw())
@@ -75,15 +79,21 @@ class Program():
                 print (each)
         else:
             print("no data")
+        input("Press any key to continue.........")
         
     
     def upload_json(self):
         data = input("Enter json file: ")
         self.crud.JsonLoader(data)
-    
+
     def sort(self):
         sor = sortSearch()
         out= sor.Sort()
+        self.View(out)
+
+    def search(self):
+        search = sortSearch()
+        out=search.Search()
         self.View(out)
 
     def close(self):
@@ -92,18 +102,15 @@ class Program():
 
 if __name__== '__main__':
     new = Program()
-    options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.Viewtable,new.sort]
+    options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.Viewtable,new.sort,new.search]
     while True:
         click.clear()
         action = int(input(
             '''
-            Press 1 to Insert
-            Press 2 to Select
-            Press 3 to Update
-            Press 4 to Delete
-            Press 5 to Load JSON
-            Press 6 to View all rows
-            Press 7 to Sort by name
+            Press 1 to Insert               Press 2 to Select
+            Press 3 to Update               Press 4 to Delete
+            Press 5 to Load JSON            Press 6 to View all rows
+            Press 7 to Sort by name         Press 8 to Search Database
             Press 0 to exit
             
             '''

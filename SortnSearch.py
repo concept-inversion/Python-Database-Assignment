@@ -1,14 +1,41 @@
 import statistics
+import random
+import threading
 from databaseModule import DB_connect
 from crudController import CRUD
-import random
+
+
 class sortSearch():
     def __init__(self, *args, **kwargs):
         self.crud= CRUD()
 
     def Search(self):
         #Search in every column
-        pass
+        data= self.crud.View()
+        key = (input('''
+                        Press and Enter 1 to start search from Numbers[INT,FLOAT,REAL etc]
+                        Press and Enter 2 to start search from Text[VARCHAR,TEXT,WORDS,SENTENCES etc]
+                        Press and Enter any other keys to exit
+                        
+                        P.S : It will search all columns eventually.
+                                                '''))
+
+        if key == '1':
+            order= [0,7,8,10,11,1,2,4,5,6,9,3]
+        elif key == '2':
+            order= [1,2,4,5,6,9,3,0,7,8,10,11]
+        else:
+            exit
+        search = input("Enter the variable to search: ")
+        result= []
+        for o in order:
+            for i in range(len(data)-1):
+                value = str(data[i][o])
+                if search == (value):
+                    result.append(data[i])
+        return result    
+
+
 
 
     def Sort(self,*args):
