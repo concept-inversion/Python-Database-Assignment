@@ -1,4 +1,5 @@
 import json
+import click
 from databaseModule import DB_connect
 from crudController import CRUD
 from SortnSearch import sortSearch
@@ -63,6 +64,7 @@ class Program():
             print(Ttable.draw())
         else:
             print("No Data to show")
+        input("Press any key to continue.........")
 
     def Select(self):
         # [Column name] [operation][cond]
@@ -92,6 +94,7 @@ if __name__== '__main__':
     new = Program()
     options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.Viewtable,new.sort]
     while True:
+        click.clear()
         action = int(input(
             '''
             Press 1 to Insert
