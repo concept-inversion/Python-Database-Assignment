@@ -35,8 +35,12 @@ class Program():
         cond = input("[Update]Enter the query starting from column name: ")
         self.crud.Read(cond)
     
-    def View(self):
+    def Viewtable(self):
         output=self.crud.View()
+        self.View(output)
+    
+    def View(self,data):
+        
         Ttable = Texttable(150)
         Header = ["Id",    
         "Bio",
@@ -52,8 +56,8 @@ class Program():
         "Email"
         ]
         
-        if output:
-            Ttable.add_rows(output)
+        if data:
+            Ttable.add_rows(data)
             Ttable.set_deco(Texttable.BORDER | Texttable.HEADER | Texttable.VLINES | Texttable.HLINES )
             Ttable.header(Header)
             print(Ttable.draw())
@@ -78,8 +82,7 @@ class Program():
     def sort(self):
         sor = sortSearch()
         out= sor.Sort()
-        for each in out:
-            print(each)
+        self.View(out)
 
     def close(self):
         self.crud.close()
@@ -87,7 +90,7 @@ class Program():
 
 if __name__== '__main__':
     new = Program()
-    options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.View,new.sort]
+    options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.Viewtable,new.sort]
     while True:
         action = int(input(
             '''
