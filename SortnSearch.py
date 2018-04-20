@@ -14,9 +14,9 @@ class sortSearch():
     def Sort(self,*args):
         data = self.crud.View()
         print("suce")
-        data = [x[1] for x in data]
-        #out = self.InsertionSort(data)
-        out = self.ThreeP_QuickSort(data)
+        #data = [x[1] for x in data]
+        out = self.InsertionSort(data)
+        #out = self.ThreeP_QuickSort(data)
         return out
 
     def InsertionSort(self,data):
@@ -24,11 +24,10 @@ class sortSearch():
         for i in range(length):
             Value = data[i]
             holePos = i
-            while ((holePos >0) and (data[holePos-1] > Value)):
+            while ((holePos >0) and (data[holePos-1][1] > Value[1])):
                 data[holePos] = data[holePos-1]
                 holePos= holePos-1        
             data[holePos]=Value
-        print(data)
         return data
 
     def ThreeP_QuickSort(self,data):
