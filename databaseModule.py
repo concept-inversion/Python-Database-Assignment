@@ -3,6 +3,21 @@ from sqlite3 import Error
 
 
 class DB_connect(object):
+    '''
+    Implementation of SQLite Python module
+    Functions:
+    1. closeDB(self)
+        [Connection].closeDB() : Commit the database and closes the connection with the database. 
+
+    2. executeDB(self,statement,key)
+        [Conncetion].executeDB(self, statement, key) : Executes a SQL Query in the Database
+            statement -> Query
+            key -> Optional parameters
+    
+    3. createTable()
+        Creates a Table with a fixed schema 
+    '''
+    
     def __init__(self, name):
         try:
             self.Link = sqlite3.connect(name)
@@ -10,17 +25,20 @@ class DB_connect(object):
             self.createTable()
         except Error as err:
             print(err)   
-
-    def executeDB(self,statement):
+            
+    def executeDB(self,statement,key):
         try:
-            data = self.cursor.execute(statement)
+            self.cursor.execute(statement,key)
             self.Link.commit()
-            return data
+            print("Execution Completed Successful")
+            return (self.cursor.fetchall())
+
         except Error as err:
             print(err)
-        
-            
-        
+            self.Link.rollback()
+
+
+
     def createTable(self):
         statement = '''
  CREATE TABLE IF NOT EXISTS PEOPLE
