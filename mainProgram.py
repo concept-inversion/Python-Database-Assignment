@@ -6,7 +6,8 @@ from SortnSearch import sortSearch
 from texttable import Texttable
 class Program():
     def __init__(self, *args, **kwargs):
-        self.crud = CRUD()
+        x=int(input("Select Database: 1.  SQLite      2. PostgreSQL"))
+        self.crud = CRUD(x)
 
     def Delete(self):
         # [Column name] [operation][cond]
