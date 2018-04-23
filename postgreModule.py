@@ -1,6 +1,20 @@
 import psycopg2
 from psycopg2 import Error
 class Postgre_db:
+    '''
+    Implementation of PostgreSQL module
+    Functions:
+    1. closeDB(self)
+        [Connection].closeDB() : Commit the database and closes the connection with the database. 
+
+    2. executeDB(self,statement,key)
+        [Conncetion].executeDB(self, statement, key) : Executes a SQL Query in the Database
+            statement -> Query
+            key -> Optional parameters
+    
+    3. createTable()
+        Creates a Table with a fixed schema 
+    '''
     def __init__(self, *args, **kwargs):        
         try:
             self.Link = psycopg2.connect("dbname=postgre user=concept password=concept host=localhost port=5432 ")
