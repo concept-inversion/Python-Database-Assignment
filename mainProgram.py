@@ -29,12 +29,15 @@ class Program():
         }
         for key in format:
             format[key]= input("Enter the "+ key )
-        self.crud.Create(format)
+        data=self.crud.Create(format)
+        print(data)
+        input("Press any key to continue.........")
 
     def Update(self):
         # [Column name] [operation][cond]
         cond = input("[Update]Enter the query starting from column name: ")
         self.crud.Read(cond)
+        input("Press any key to continue.........")
     
     def Viewtable(self):
         output=self.crud.View()
@@ -83,8 +86,9 @@ class Program():
         
     
     def upload_json(self):
-        data = input("Enter json file: ")
+        data = input("Enter json file in the main directory: ")
         self.crud.JsonLoader(data)
+        input("Press any key to continue.........")
 
     def sort(self):
         sor = sortSearch()
@@ -112,7 +116,6 @@ if __name__== '__main__':
             Press 5 to Load JSON            Press 6 to View all rows
             Press 7 to Sort by name         Press 8 to Search Database
             Press 0 to exit
-            
             '''
         ))
         if(action==0):
