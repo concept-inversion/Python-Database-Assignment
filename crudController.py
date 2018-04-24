@@ -20,18 +20,21 @@ class CRUD():
     
     '''
     
-    def __init__(self, *args, **kwargs):
+    def __init__(self, select):
         # use without self
-        self.db = DB_connect('mysql.db') 
-        
-    def Create(self,each):
-        #columns = ', '.join(each.keys())
-        #placeholders = ':'+', :'.join(each.keys())
-        statement = ("INSERT INTO People ( Bio, Name, Dob, Gender, Email, Longitude, Latitude, Phone, Link, Image,Address )"
-                  " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-        data=self.db.executeDB(statement,(each['Bio'],each['Name'],each['Dob'],each['Gender'],each['Email'],each['Longitude'],each['Latitude'],each['Phone'],each['Link'],each['Image'],each['Address']))   
-        print("Data Inserted")
-        return data
+        if select == 1:
+            self.db = DB_connect('mysql.db') 
+            print("SQL")
+        elif select ==2:
+            self.db = Postgre_db()
+            print("PostgreSQL")
+        else:
+            print("No Choice selected. Default = PostgreSQL")
+            self.db= Postgre_db()
+
+    def Create(self,data):
+        self.db.Create(data)
+        print("Create operation Successful")
 
     def Update(self,param):
         statement= 'UPDATE PEOPLE SET %s'% (param)
@@ -58,14 +61,8 @@ class CRUD():
         return data
 
     def JsonLoader(self,data):
-        raw=json.load(open(data))
-        for each in raw:
-            #columns = ', '.join(each.keys())
-            #placeholders = ':'+', :'.join(each.keys())
-            statement = ("INSERT INTO People ( Bio, Name, Dob, Gender, Email, Longitude, Latitude, Phone, Link, Image,Address )"
-                  " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-            data=self.db.executeDB(statement,(each['Bio'],each['Name'],each['Dob'],each['Gender'],each['Email'],each['Longitude'],each['Latitude'],each['Phone'],each['Link'],each['Image'],each['Address']))
-        return data
+        self.db.JsonLoader(data)
+        print("JSON uploaded")
     
     def close(self):
         self.db.closeDB()
