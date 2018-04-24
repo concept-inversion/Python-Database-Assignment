@@ -112,7 +112,7 @@ if __name__== '__main__':
     new = Program()
     options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.Viewtable,new.sort,new.search]
     while True:
-        #click.clear()
+        click.clear()
         print("Current database: ",new.database)
         action = int(input(
             '''
