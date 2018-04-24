@@ -6,9 +6,13 @@ from SortnSearch import sortSearch
 from texttable import Texttable
 class Program():
     def __init__(self, *args, **kwargs):
-        x=int(input("Select Database: 1.  SQLite      2. PostgreSQL"))
-        self.crud = CRUD(x)
-
+        self.x=int(input("Select Database: 1.  SQLite      2. PostgreSQL"))
+        self.crud = CRUD(self.x)
+        if self.x==1:
+            self.database = 'SQLite'
+        else:
+            self.database = 'PostgreSQL'
+    
     def Delete(self):
         # [Column name] [operation][cond]
         cond = input("[Delete]Enter the query starting from column name: ")
@@ -31,7 +35,6 @@ class Program():
         for key in format:
             format[key]= input("Enter the "+ key )
         data=self.crud.Create(format)
-        print(data)
         input("Press any key to continue.........")
 
     def Update(self):
@@ -92,12 +95,12 @@ class Program():
         input("Press any key to continue.........")
 
     def sort(self):
-        sor = sortSearch()
-        out= sor.Sort()
+        sort = sortSearch(self.crud)
+        out= sort.Sort()
         self.View(out)
 
     def search(self):
-        search = sortSearch()
+        search = sortSearch(self.crud)
         out=search.Search()
         self.View(out)
 
@@ -109,19 +112,24 @@ if __name__== '__main__':
     new = Program()
     options = [None,new.Insert,new.Select,new.Update,new.Delete,new.upload_json,new.Viewtable,new.sort,new.search]
     while True:
-        click.clear()
+        #click.clear()
+        print("Current database: ",new.database)
         action = int(input(
             '''
+                                             
             Press 1 to Insert               Press 2 to Select
             Press 3 to Update               Press 4 to Delete
             Press 5 to Load JSON            Press 6 to View all rows
             Press 7 to Sort by name         Press 8 to Search Database
+            Press 9 to switch database
             Press 0 to exit
-            '''
-        ))
+            '''))
         if(action==0):
             new.close()
             break
+        elif(action==9):
+            new.crud.close()
+            new = Program()
         else:
             options[action]()
         
