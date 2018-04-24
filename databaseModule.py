@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-
+import json
 
 class DB_connect(object):
     '''
@@ -30,7 +30,6 @@ class DB_connect(object):
         try:
             self.cursor.execute(statement,key)
             self.Link.commit()
-            print("Execution Completed Successful")
             return (self.cursor.fetchall())
 
         except Error as err:
@@ -63,7 +62,23 @@ class DB_connect(object):
             print("table creataed")
         except Error as err:
             print(err)
-      
+    
+    def JsonLoader(self,data):
+        raw=json.load(open(data))
+        for each in raw:
+            columns = ', '.join(each.keys())
+            placeholders = ':'+', :'.join(each.keys())
+            statement = 'INSERT INTO PEOPLE (%s) VALUES (%s)'% (columns, placeholders,)
+            data=self.cursor.execute(statement,each)
+        return data
+
+    def Create(self,each):
+        columns = ', '.join(each.keys())
+        placeholders = ':'+', :'.join(each.keys())
+        statement = 'INSERT INTO PEOPLE (%s) VALUES (%s)'% (columns, placeholders,)
+        data=self.Link.execute(statement,each)   
+        return data
+
     def closeDB(self):
         try:
             self.Link.commit()
