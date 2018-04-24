@@ -6,8 +6,8 @@ from crudController import CRUD
 
 
 class sortSearch():
-    def __init__(self, *args, **kwargs):
-        self.crud= CRUD()
+    def __init__(self, crud):
+        self.crud= crud
 
     def Search(self):
         #Search in every column
