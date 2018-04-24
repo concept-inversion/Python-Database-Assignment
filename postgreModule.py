@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import Error
+import json
 class Postgre_db:
     '''
     Implementation of PostgreSQL module
@@ -32,16 +33,35 @@ class Postgre_db:
         except Error as err:
             print(err)
 
+    def Create(self,each):
+        #columns = ', '.join(each.keys())
+        #placeholders = ':'+', :'.join(each.keys())
+        statement = ("INSERT INTO People ( Bio, Name, Dob, Gender, Email, Longitude, Latitude, Phone, Link, Image,Address )"
+                  " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+        print(statement)
+        data=self.executeDB(statement,(each['Bio'],each['Name'],each['Dob'],each['Gender'],each['Email'],each['Longitude'],each['Latitude'],each['Phone'],each['Link'],each['Image'],each['Address']))   
+        print("Data Inserted")
+        return data
+
     def executeDB(self,statement,key):
         try:
             self.cursor.execute(statement,key)
             self.Link.commit()
-            print("Execution Completed Successful")
             return (self.cursor.fetchall())
 
         except Error as err:
             print(err)
+            self.Link.rollback()
     
+    def JsonLoader(self,data):
+        raw=json.load(open(data))
+        for each in raw:
+            #columns = ', '.join(each.keys())
+            #placeholders = ':'+', :'.join(each.keys())
+            statement = ("INSERT INTO People ( Bio, Name, Dob, Gender, Email, Longitude, Latitude, Phone, Link, Image,Address )"
+                  " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+            data=self.executeDB(statement,(each['Bio'],each['Name'],each['Dob'],each['Gender'],each['Email'],each['Longitude'],each['Latitude'],each['Phone'],each['Link'],each['Image'],each['Address']))
+        return data
 
     def createTable(self):
         statement = (
